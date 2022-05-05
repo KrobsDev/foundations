@@ -128,10 +128,10 @@ class _OnboardingState extends State<Onboarding> {
                           ),
                           TextButton(
                             onPressed: () {
-                              if (currentIndex == 3 - 1) {
+                              if (currentIndex == contents.length - 1) {
                                 Navigator.pushNamedAndRemoveUntil(
                                   context,
-                                  "/login",
+                                  "/",
                                   (r) => false,
                                 );
                               }
