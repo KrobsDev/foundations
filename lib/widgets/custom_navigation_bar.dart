@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../screens/home_screen.dart';
 import '../screens/charities_screen.dart';
 import '../screens/search_screen.dart';
-import '../screens/settings_screen.dart';
+import '../screens/profile_screen.dart';
 
 class CustomBottomNavigation extends StatefulWidget {
   const CustomBottomNavigation({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
     const HomePage(),
     const CharitiesPage(),
     const SearchPage(),
-    const SettingsPage(),
+    const ProfilePage(),
   ];
 
   @override

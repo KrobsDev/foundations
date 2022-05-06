@@ -33,13 +33,19 @@ class HomePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: const [
+            PostItem(
+              profileImage:
+                  "https://images.unsplash.com/photo-1629425733761-caae3b5f2e50?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGhlYWRzaG90fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60",
+              photo:
+                  "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y2hhcml0eXxlbnwwfDB8MHx8&auto=format&fit=crop&w=900&q=60",
+            ),
             PostItem(),
-            PostItem(),
-            PostItem(),
-            PostItem(),
-            PostItem(),
-            PostItem(),
+            // PostItem(),
+            // PostItem(),
+            // PostItem(),
+            // PostItem(),
           ],
         ),
       ),
