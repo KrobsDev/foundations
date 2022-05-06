@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foundations/constants.dart';
+import 'package:photo_view/photo_view.dart';
 
 class FullScreenImg extends StatelessWidget {
   final String photo;
@@ -13,12 +14,12 @@ class FullScreenImg extends StatelessWidget {
         elevation: 0,
       ),
       extendBodyBehindAppBar: true,
-      backgroundColor: kDefaultBackground,
+      // backgroundColor: kDefaultBackground,
       body: Center(
         child: Hero(
           tag: photo,
-          child: Image(
-            image: Image.network(photo).image,
+          child: PhotoView(
+            imageProvider: Image.network(photo).image,
           ),
         ),
       ),

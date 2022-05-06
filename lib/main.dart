@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:foundations/screens/login.dart';
 import 'package:foundations/screens/onboarding_screen.dart';
+import 'package:foundations/screens/register.dart';
 import 'package:foundations/widgets/custom_navigation_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +30,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const CustomBottomNavigation(),
         '/onboard': (context) => const Onboarding(),
+        '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const RegisterScreen(),
       },
       // home: Onboarding(),
     );

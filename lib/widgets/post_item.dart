@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foundations/screens/inner_pages/show_full_image.dart';
 // import 'package:photo_view/photo_view.dart';
 import '../constants.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
 
 class PostItem extends StatelessWidget {
   final String? photo;
@@ -35,7 +34,7 @@ class PostItem extends StatelessWidget {
               Text(
                 'Nana Akwasi',
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: kDefaultFontSize,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -44,7 +43,7 @@ class PostItem extends StatelessWidget {
                 '@nakwasi23',
                 style: TextStyle(
                   color: Colors.grey,
-                  fontSize: 12,
+                  fontSize: 14,
                 ),
               ),
             ],

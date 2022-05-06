@@ -133,16 +133,6 @@ class ProfilePage extends StatelessWidget {
             ),
             ListTile(
               minLeadingWidth: 10,
-              leading: const Icon(Icons.person),
-              title: const Text('Notification'),
-              trailing: const Icon(
-                Icons.arrow_forward_ios,
-                size: 20,
-              ),
-              onTap: () {},
-            ),
-            ListTile(
-              minLeadingWidth: 10,
               leading: const Icon(Icons.contact_phone),
               title: const Text('Contact Information'),
               trailing: const Icon(
@@ -160,6 +150,18 @@ class ProfilePage extends StatelessWidget {
                 size: 20,
               ),
               onTap: () {},
+            ),
+            ListTile(
+              minLeadingWidth: 10,
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+                size: 20,
+              ),
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).pushNamed('/login');
+              },
             ),
           ],
         ),

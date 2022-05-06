@@ -11,19 +11,10 @@ class SearchPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: const Image(
+        title: const Image(
           image: AssetImage('assets/logo/logo-dark-sm.png'),
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Icon(
-              Icons.notifications_none_outlined,
-              color: kDefaultBackground,
-              size: 30,
-            ),
-          )
-        ],
+        centerTitle: true,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

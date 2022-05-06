@@ -55,9 +55,9 @@ class _CharitiesPageState extends State<CharitiesPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               const Text('Search Charities by location'),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButtonFormField2(
                 isExpanded: true,
                 value: dropdownValue,
