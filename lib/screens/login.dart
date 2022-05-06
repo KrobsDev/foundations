@@ -197,8 +197,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context, rootNavigator: true)
-                        .pushNamed('/signup');
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/signup',
+                      (route) =>
+                          route.isCurrent && route.settings.name == '/signup'
+                              ? false
+                              : true,
+                    );
                   },
                   child: const Text(
                     'Sign up now',

@@ -195,8 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context, rootNavigator: true)
-                        .pushNamed('/login');
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     'Sign in',
