@@ -23,8 +23,11 @@ class PostItem extends StatelessWidget {
       children: [
         ListTile(
           onTap: () {
-            Navigator.of(context, rootNavigator: true).push(
-                MaterialPageRoute(builder: (context) => ExpandedPostPage()));
+            Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                builder: (context) => ExpandedPostPage(
+                      photo: photo,
+                      profileImage: profileImage,
+                    )));
           },
           leading: CircleAvatar(
             backgroundColor: inactiveColor.withOpacity(0.2),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foundations/screens/inner_pages/posts_expanded_view.dart';
 import 'package:foundations/screens/inner_pages/show_full_image.dart';
 // import 'package:photo_view/photo_view.dart';
 import '../constants.dart';
@@ -22,7 +21,8 @@ class ExpandedPostItem extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding:
+              const EdgeInsets.only(top: 20.0, bottom: 10, left: 20, right: 20),
           child: Column(
             children: [
               Row(
@@ -91,7 +91,7 @@ class ExpandedPostItem extends StatelessWidget {
                                     FullScreenImg(photo: photo!)));
                       },
                       child: Container(
-                        alignment: Alignment.center,
+                        // alignment: Alignment.center,
                         width: double.infinity,
                         height: 200,
                         decoration: BoxDecoration(
@@ -115,34 +115,36 @@ class ExpandedPostItem extends StatelessWidget {
                       ),
                     )
                   : const SizedBox(height: 0),
-              const SizedBox(height: 5),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Row(
                     children: const [
-                      Icon(
-                        Icons.favorite_border,
-                        color: Colors.grey,
-                        size: 20,
-                      ),
+                      // Icon(
+                      //   Icons.favorite_border,
+                      //   color: Colors.grey,
+                      //   size: 20,
+                      // ),
+                      Text('200'),
                       SizedBox(width: 2),
-                      Text('200')
+                      Text('likes'),
                     ],
                   ),
                   const SizedBox(width: 15),
                   Row(
                     children: const [
-                      Icon(
-                        Icons.bubble_chart,
-                        color: Colors.grey,
-                        size: 20,
-                      ),
+                      // Icon(
+                      //   Icons.bubble_chart,
+                      //   color: Colors.grey,
+                      //   size: 20,
+                      // ),
+                      Text('10'),
                       SizedBox(width: 2),
-                      Text('10')
+                      Text('comments'),
                     ],
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

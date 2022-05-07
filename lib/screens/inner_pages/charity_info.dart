@@ -13,6 +13,7 @@ class CharityDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _donationAmount = TextEditingController();
     var amount = '2,000';
     return Scaffold(
       appBar: AppBar(
@@ -108,7 +109,106 @@ class CharityDetail extends StatelessWidget {
                     ),
                   ),
                 ),
-                CustomButton(onPressed: () {}, btnName: 'Support this project'),
+                CustomButton(
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (BuildContext context) {
+                          return Container(
+                            padding: const EdgeInsets.all(20),
+                            // height: 400,
+                            width: double.infinity,
+                            color: Colors.white,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      'Donation',
+                                      style:
+                                          TextStyle(color: kDefaultBackground),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.close,
+                                        color: inactiveColor,
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                Flexible(
+                                  child: TextFormField(
+                                    controller: _donationAmount,
+                                    decoration: InputDecoration(
+                                      label: const Text('Amount'),
+                                      labelStyle: const TextStyle(
+                                          color: kDefaultBackground),
+                                      hintText:
+                                          'Enter amount you wish to donate',
+                                      hintStyle: TextStyle(
+                                        color: inactiveColor,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      prefixIcon: const Icon(
+                                        Icons.attach_money,
+                                        color: kDarkTextColor,
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: inactiveColor),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: inactiveColor),
+                                      ),
+                                      errorBorder: const OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.red),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color:
+                                              kDarkTextColor.withOpacity(0.3),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                const Text(
+                                  'We appreciate the effort. Rest assured that your donation will be put to good use. You are a blessing to many. Thank you for the kind gesture',
+                                  style: TextStyle(height: 1.5),
+                                ),
+                                const SizedBox(height: 20),
+                                Container(
+                                  width: double.infinity,
+                                  height: 250,
+                                  decoration: const BoxDecoration(
+                                      // border: Border.all(),
+                                      ),
+                                  child: const Image(
+                                    image: AssetImage(
+                                        "assets/images/undraw_Gifts_re_97j6.png"),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                const Spacer(),
+                                CustomButton(
+                                    onPressed: () {}, btnName: 'Donate')
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    btnName: 'Support this project'),
                 // const Padding(
                 //   padding: EdgeInsets.all(20),
                 // )

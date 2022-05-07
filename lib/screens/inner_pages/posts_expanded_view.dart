@@ -4,7 +4,13 @@ import 'package:foundations/widgets/expanded_post_item.dart';
 import 'package:foundations/widgets/post_item.dart';
 
 class ExpandedPostPage extends StatelessWidget {
-  const ExpandedPostPage({Key? key}) : super(key: key);
+  final String? photo;
+  final String? profileImage;
+  final VoidCallback? onTap;
+  final bool? hideDets;
+  const ExpandedPostPage(
+      {Key? key, this.photo, this.profileImage, this.onTap, this.hideDets})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,15 @@ class ExpandedPostPage extends StatelessWidget {
       body: SingleChildScrollView(
           child: Column(
         children: [
-          ExpandedPostItem(),
+          ExpandedPostItem(
+            profileImage: profileImage,
+            photo: photo!,
+          ),
+          Divider(),
+          PostItem(),
+          PostItem(),
+          PostItem(),
+          PostItem(),
         ],
       )),
     );
