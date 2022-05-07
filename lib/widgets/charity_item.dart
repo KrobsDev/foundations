@@ -42,7 +42,9 @@ class CharityItem extends StatelessWidget {
                 tag: title,
                 child: Image(
                   fit: BoxFit.cover,
-                  image: NetworkImage(image),
+                  image: image.isNotEmpty
+                      ? NetworkImage(image)
+                      : Image.asset("assets/images/no-image-icon-20.png").image,
                 ),
               ),
             ),

@@ -46,7 +46,7 @@ class SearchPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              'Recent Searched',
+              'Recent Searches',
               style: TextStyle(color: inactiveColor),
             ),
           ),

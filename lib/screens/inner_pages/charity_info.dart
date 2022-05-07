@@ -43,10 +43,12 @@ class CharityDetail extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     child: Hero(
                       tag: title,
-                      child: Image.network(
-                        image,
-                        fit: BoxFit.cover,
-                      ),
+                      child: image.isNotEmpty
+                          ? Image.network(
+                              image,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset("assets/images/no-image-icon-20.png"),
                     ),
                   ),
                 ),
