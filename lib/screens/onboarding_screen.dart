@@ -129,11 +129,9 @@ class _OnboardingState extends State<Onboarding> {
                           TextButton(
                             onPressed: () {
                               if (currentIndex == contents.length - 1) {
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  "/",
-                                  (r) => false,
-                                );
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushNamedAndRemoveUntil(
+                                        '/login', (route) => false);
                               }
                               _controller.nextPage(
                                 duration: const Duration(milliseconds: 200),

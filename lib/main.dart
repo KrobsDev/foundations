@@ -6,16 +6,19 @@ import 'package:foundations/screens/profile/account_settings.dart';
 import 'package:foundations/screens/profile/contact_info.dart';
 import 'package:foundations/screens/profile/donations.dart';
 import 'package:foundations/screens/profile/my_profile.dart';
+import 'package:foundations/screens/profile_screen.dart';
 import 'package:foundations/screens/register.dart';
 import 'package:foundations/widgets/custom_navigation_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int? initScreen;
+String? uid;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);
+  uid = prefs.getString("uid");
   runApp(const MyApp());
 }
 
@@ -31,12 +34,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: initScreen == 0 || initScreen == null ? '/onboard' : '/',
+      initialRoute: initScreen == 0 || initScreen == null
+          ? '/onboard'
+          : uid == null
+              ? '/login'
+              : '/home',
       routes: {
-        '/': (context) => const CustomBottomNavigation(),
+        '/home': (context) => const CustomBottomNavigation(),
         '/onboard': (context) => const Onboarding(),
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const RegisterScreen(),
+        '/profile': (context) => const ProfilePage(),
         '/notifications': (context) => const NotificationsPage(),
         '/myprofile': (context) => const MyProfile(),
         '/donations': (context) => const DonationsPage(),

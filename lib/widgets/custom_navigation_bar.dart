@@ -21,7 +21,7 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
     const HomePage(),
     const CharitiesPage(),
     const SearchPage(),
-    const ProfilePage(),
+    // const ProfilePage(),
   ];
 
   @override
@@ -48,10 +48,10 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
             icon: Icon(Icons.search),
             label: 'Explore',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.person),
+          //   label: 'Profile',
+          // ),
         ],
       ),
       tabBuilder: (BuildContext context, int index) {
