@@ -16,7 +16,6 @@ class ContactInformation extends StatefulWidget {
 }
 
 class _ContactInformationState extends State<ContactInformation> {
-  final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _phonecontroller = TextEditingController();
 
   String? uid;
@@ -58,13 +57,30 @@ class _ContactInformationState extends State<ContactInformation> {
     // print(user!.email);
   }
 
+  // update user details
+  Future _updateDetails() async {
+    var data = jsonEncode({
+      "user_id": uid,
+      "user_phone": _phonecontroller.text,
+    });
+    var url = Uri.parse("${Env.URL_PREFIX_USERS}/update_contact_info");
+    var response = await http.post(
+      url,
+      body: data,
+      headers: {
+        'Content-Type': 'application/json',
+        "Accept": "application/json",
+      },
+    );
+    var res = jsonDecode(response.body);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _isLoggedIn().whenComplete(() {
       _getUserDetails().whenComplete(() {
-        _emailcontroller.text = user!.email!;
         _phonecontroller.text = user!.phone!;
       });
     });
@@ -91,39 +107,6 @@ class _ContactInformationState extends State<ContactInformation> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Flexible(
-                child: TextFormField(
-                  controller: _emailcontroller,
-                  decoration: InputDecoration(
-                    label: const Text('Email'),
-                    labelStyle: TextStyle(color: inactiveColor),
-                    hintText: 'Email',
-                    hintStyle: TextStyle(
-                      color: inactiveColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: inactiveColor.withOpacity(0.2),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: inactiveColor),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: inactiveColor),
-                    ),
-                    errorBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: kDarkTextColor.withOpacity(0.3),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
               Flexible(
                 child: TextFormField(
                   controller: _phonecontroller,
@@ -165,7 +148,10 @@ class _ContactInformationState extends State<ContactInformation> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
         child: CustomButton(
-            onPressed: () {}, btnName: 'Update Contact Information'),
+            onPressed: () async {
+              await _updateDetails();
+            },
+            btnName: 'Update Contact Information'),
       ),
     );
   }

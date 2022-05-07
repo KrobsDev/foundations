@@ -73,6 +73,25 @@ class _MyProfileState extends State<MyProfile> {
     // print(user!.email);
   }
 
+  // update user details
+  Future _updateDetails() async {
+    var data = jsonEncode({
+      "user_id": uid,
+      "user_fname": _fnamecontroller.text,
+      "user_lname": _lnamecontroller.text,
+    });
+    var url = Uri.parse("${Env.URL_PREFIX_USERS}/update_user");
+    var response = await http.post(
+      url,
+      body: data,
+      headers: {
+        'Content-Type': 'application/json',
+        "Accept": "application/json",
+      },
+    );
+    var res = jsonDecode(response.body);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -245,7 +264,12 @@ class _MyProfileState extends State<MyProfile> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-        child: CustomButton(onPressed: () {}, btnName: 'Update Profile'),
+        child: CustomButton(
+          onPressed: () async {
+            await _updateDetails();
+          },
+          btnName: 'Update Profile',
+        ),
       ),
     );
   }

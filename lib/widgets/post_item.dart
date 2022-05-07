@@ -25,12 +25,15 @@ class PostItem extends StatelessWidget {
       children: [
         ListTile(
           onTap: () {
-            Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+            Navigator.of(context, rootNavigator: true).push(
+              MaterialPageRoute(
                 builder: (context) => ExpandedPostPage(
-                      photo: photo,
-                      profileImage: profileImage,
-                      content: content,
-                    )));
+                  photo: photo,
+                  profileImage: profileImage,
+                  content: content,
+                ),
+              ),
+            );
           },
           leading: CircleAvatar(
             backgroundColor: inactiveColor.withOpacity(0.2),
@@ -73,6 +76,7 @@ class PostItem extends StatelessWidget {
             ],
           ),
           subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 content!,
