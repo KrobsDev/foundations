@@ -1,9 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:foundations/widgets/custom_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../env.dart';
+import '../../models/user_model.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -13,6 +18,9 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
+  final TextEditingController _fnamecontroller = TextEditingController();
+  final TextEditingController _lnamecontroller = TextEditingController();
+
   final ImagePicker _picker = ImagePicker();
   File? imageFile;
 
@@ -26,11 +34,59 @@ class _MyProfileState extends State<MyProfile> {
     }
   }
 
+  String? uid;
+
+  bool isLoading = false;
+
+  // function check if user is logged in
+  Future _isLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      uid = prefs.getString("uid");
+    });
+
+    // print(uid);
+  }
+
+  // User object to use throughout page
+  User? user;
+
+  // get user details
+  Future _getUserDetails() async {
+    var url = Uri.parse("${Env.URL_PREFIX_USERS}/read_single.php?id=$uid");
+    var response = await http.get(
+      url,
+      headers: {"Accept": "application/json"},
+    );
+
+    var res = jsonDecode(response.body);
+
+    // get user in user object
+    Map<String, dynamic> userMap = res;
+    User userObj = User.fromJson(userMap);
+
+    // print(user.email);
+    setState(() {
+      user = userObj;
+    });
+
+    // print(user!.email);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _isLoggedIn().whenComplete(() {
+      _getUserDetails().whenComplete(() {
+        _fnamecontroller.text = user!.fname!;
+        _lnamecontroller.text = user!.lname!;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _fnamecontroller = TextEditingController();
-    final TextEditingController _lnamecontroller = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

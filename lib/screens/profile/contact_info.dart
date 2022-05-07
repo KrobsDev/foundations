@@ -1,15 +1,77 @@
-import 'package:flutter/material.dart';
-import '../../constants.dart';
-import '../../widgets/custom_button.dart';
+import 'dart:convert';
 
-class ContactInformation extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../constants.dart';
+import '../../env.dart';
+import '../../models/user_model.dart';
+import '../../widgets/custom_button.dart';
+import 'package:http/http.dart' as http;
+
+class ContactInformation extends StatefulWidget {
   const ContactInformation({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController _emailcontroller = TextEditingController();
-    final TextEditingController _phonecontroller = TextEditingController();
+  State<ContactInformation> createState() => _ContactInformationState();
+}
 
+class _ContactInformationState extends State<ContactInformation> {
+  final TextEditingController _emailcontroller = TextEditingController();
+  final TextEditingController _phonecontroller = TextEditingController();
+
+  String? uid;
+
+  bool isLoading = false;
+
+  // function check if user is logged in
+  Future _isLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      uid = prefs.getString("uid");
+    });
+
+    // print(uid);
+  }
+
+  // User object to use throughout page
+  User? user;
+
+  // get user details
+  Future _getUserDetails() async {
+    var url = Uri.parse("${Env.URL_PREFIX_USERS}/read_single.php?id=$uid");
+    var response = await http.get(
+      url,
+      headers: {"Accept": "application/json"},
+    );
+
+    var res = jsonDecode(response.body);
+
+    // get user in user object
+    Map<String, dynamic> userMap = res;
+    User userObj = User.fromJson(userMap);
+
+    // print(user.email);
+    setState(() {
+      user = userObj;
+    });
+
+    // print(user!.email);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _isLoggedIn().whenComplete(() {
+      _getUserDetails().whenComplete(() {
+        _emailcontroller.text = user!.email!;
+        _phonecontroller.text = user!.phone!;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -29,13 +91,6 @@ class ContactInformation extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(vertical: 10),
-              //   child: const Text(
-              //     'Update your contact information',
-              //     style: TextStyle(fontSize: kDefaultHeading),
-              //   ),
-              // ),
               Flexible(
                 child: TextFormField(
                   controller: _emailcontroller,

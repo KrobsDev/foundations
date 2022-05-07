@@ -119,12 +119,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 100.0, bottom: 2),
+                Padding(
+                  padding: const EdgeInsets.only(top: 100.0, bottom: 2),
                   child: Center(
                     child: Text(
-                      'Vanessa Moriwa',
-                      style: TextStyle(
+                      user == null
+                          ? '...loading'
+                          : user!.fname! + ' ' + user!.lname!,
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
                       ),
@@ -132,7 +134,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Text(
-                  'vmoriwa@gmail.com',
+                  user == null ? '...loading' : user!.email!,
                   style: TextStyle(color: inactiveColor),
                 ),
                 const SizedBox(height: 20),
