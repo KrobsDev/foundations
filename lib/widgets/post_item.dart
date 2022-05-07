@@ -7,6 +7,7 @@ import '../constants.dart';
 class PostItem extends StatelessWidget {
   final String? photo;
   final String? profileImage;
+  final String? content;
   final VoidCallback? onTap;
   final bool? hideDets;
   const PostItem({
@@ -14,6 +15,7 @@ class PostItem extends StatelessWidget {
     this.profileImage = "",
     this.photo = "",
     this.onTap,
+    this.content = "",
     this.hideDets = false,
   }) : super(key: key);
 
@@ -27,6 +29,7 @@ class PostItem extends StatelessWidget {
                 builder: (context) => ExpandedPostPage(
                       photo: photo,
                       profileImage: profileImage,
+                      content: content,
                     )));
           },
           leading: CircleAvatar(
@@ -71,9 +74,9 @@ class PostItem extends StatelessWidget {
           ),
           subtitle: Column(
             children: [
-              const Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam tellus sed orci viverra eros, nisl egestas sed diam. Quam condimentum eget dictum a.',
-                style: TextStyle(
+              Text(
+                content!,
+                style: const TextStyle(
                   color: Colors.black87,
                   fontSize: kDefaultFontSize,
                 ),
@@ -114,7 +117,7 @@ class PostItem extends StatelessWidget {
                   : const SizedBox(height: 0),
               const SizedBox(height: 5),
               hideDets!
-                  ? SizedBox(
+                  ? const SizedBox(
                       height: 0,
                     )
                   : Row(

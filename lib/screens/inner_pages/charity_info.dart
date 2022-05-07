@@ -3,18 +3,27 @@ import 'package:foundations/constants.dart';
 import 'package:foundations/widgets/custom_button.dart';
 
 class CharityDetail extends StatelessWidget {
+  final String id;
   final String title;
   final String image;
+  final String description;
+  final String amount;
+  final String target;
+
   const CharityDetail({
     Key? key,
     required this.title,
     required this.image,
+    required this.id,
+    required this.description,
+    required this.amount,
+    required this.target,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController _donationAmount = TextEditingController();
-    var amount = '2,000';
+    // var amount = '2,000';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -54,9 +63,9 @@ class CharityDetail extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 const SizedBox(height: 5),
-                const Text(
-                  'Ghana Residential Fund',
-                  style: TextStyle(
+                Text(
+                  title,
+                  style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
                   ),
@@ -78,7 +87,7 @@ class CharityDetail extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'GHS ${amount}',
+                      'GHS $amount',
                       style: const TextStyle(
                         fontSize: kDefaultHeading,
                         fontWeight: FontWeight.bold,
@@ -101,11 +110,11 @@ class CharityDetail extends StatelessWidget {
                   title: const Text('Marcus Androza'),
                   subtitle: const Text('mardoza@gmail.com'),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 25),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 25),
                   child: Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi lorem nunc laoreet aliquet. psum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi lorem nunc laoreet aliquet. psum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi lorem nunc laoreet aliquet. psum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi lorem nunc laoreet aliquet. psum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi lorem nunc laoreet aliquet. psum dolor sit amet, consectetur adipiscing',
-                    style: TextStyle(
+                    description,
+                    style: const TextStyle(
                       fontSize: 16,
                       height: 1.5,
                     ),

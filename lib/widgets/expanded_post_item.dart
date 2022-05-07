@@ -6,12 +6,14 @@ import '../constants.dart';
 class ExpandedPostItem extends StatelessWidget {
   final String? photo;
   final String? profileImage;
+  final String? content;
   final VoidCallback? onTap;
   final bool? hideDets;
   const ExpandedPostItem({
     Key? key,
     this.profileImage = "",
     this.photo = "",
+    this.content = "",
     this.onTap,
     this.hideDets = false,
   }) : super(key: key);
@@ -74,9 +76,9 @@ class ExpandedPostItem extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              const Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam tellus sed orci viverra eros, nisl egestas sed diam. Quam condimentum eget dictum a.',
-                style: TextStyle(
+              Text(
+                content!,
+                style: const TextStyle(
                   color: Colors.black87,
                   fontSize: kDefaultFontSize,
                 ),

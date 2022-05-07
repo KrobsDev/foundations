@@ -6,11 +6,17 @@ import 'package:foundations/widgets/post_item.dart';
 class ExpandedPostPage extends StatelessWidget {
   final String? photo;
   final String? profileImage;
+  final String? content;
   final VoidCallback? onTap;
   final bool? hideDets;
-  const ExpandedPostPage(
-      {Key? key, this.photo, this.profileImage, this.onTap, this.hideDets})
-      : super(key: key);
+  const ExpandedPostPage({
+    Key? key,
+    this.photo,
+    this.profileImage,
+    this.onTap,
+    this.hideDets,
+    this.content,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +32,9 @@ class ExpandedPostPage extends StatelessWidget {
           ExpandedPostItem(
             profileImage: profileImage,
             photo: photo!,
+            content: content,
           ),
           Divider(),
-          PostItem(),
-          PostItem(),
-          PostItem(),
-          PostItem(),
         ],
       )),
     );

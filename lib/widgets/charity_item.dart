@@ -4,15 +4,21 @@ import 'package:foundations/screens/inner_pages/charity_info.dart';
 import '../constants.dart';
 
 class CharityItem extends StatelessWidget {
+  final String id;
   final String title;
   final String image;
+  final String description;
   final String amount;
+  final String target;
 
   const CharityItem({
     Key? key,
     required this.title,
     required this.image,
+    required this.id,
+    required this.description,
     required this.amount,
+    required this.target,
   }) : super(key: key);
 
   @override
@@ -23,6 +29,10 @@ class CharityItem extends StatelessWidget {
           builder: (context) => CharityDetail(
             title: title,
             image: image,
+            id: id,
+            description: description,
+            amount: amount,
+            target: target,
           ),
         ),
       ),
