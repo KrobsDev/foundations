@@ -50,7 +50,7 @@ class PostItem extends StatelessWidget {
               Row(
                 children: const [
                   Text(
-                    'Nana Akwasi',
+                    'Akwasi Asante',
                     style: TextStyle(
                       fontSize: kDefaultFontSize,
                       fontWeight: FontWeight.w500,
@@ -58,7 +58,7 @@ class PostItem extends StatelessWidget {
                   ),
                   SizedBox(width: 5),
                   Text(
-                    '@nakwasi23',
+                    '@ak@gmail.com',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 14,

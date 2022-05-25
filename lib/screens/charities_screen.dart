@@ -17,24 +17,13 @@ class CharitiesPage extends StatefulWidget {
 }
 
 class _CharitiesPageState extends State<CharitiesPage> {
-  String dropdownValue = 'Accra';
-
-  List<String> places = [
-    'Accra',
-    'Kumasi',
-    'Bolga',
-    'Oti',
-    'Obuasi',
-    'Cape Coast',
-    'Ho',
-  ];
 
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   // get all posts
   Future<List<CharityModel>> _getAllCharities() async {
-    var url = Uri.parse("${Env.URL_PREFIX_CHAR}/read_all");
+    var url = Uri.parse("${Env.URL_PREFIX_CHAR}/read_all.php");
     var response = await http.get(
       url,
       headers: {
@@ -76,39 +65,15 @@ class _CharitiesPageState extends State<CharitiesPage> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 10),
-            const Text('Search Charities by location'),
-            const SizedBox(height: 10),
-            DropdownButtonFormField2(
-              isExpanded: true,
-              value: dropdownValue,
-              dropdownPadding: const EdgeInsets.all(0),
-              onChanged: (value) {
-                setState(() {
-                  dropdownValue = value as String;
-                });
-              },
-              items: places.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(0),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
             const SizedBox(height: 20),
-            Text(
-              'Trending Charities in $dropdownValue',
-              style: const TextStyle(color: Colors.black54),
+            const Text(
+              'Trending Charities',
+              style: TextStyle(color: Colors.black54),
             ),
             const SizedBox(height: 10),
-            Expanded(
+            Flexible(
               child: FutureBuilder<List<CharityModel>>(
                 future: _getAllCharities(),
                 builder: (context, AsyncSnapshot<List<CharityModel>> snapshot) {
@@ -144,7 +109,7 @@ class _CharitiesPageState extends State<CharitiesPage> {
                               children: [
                                 CharityItem(
                                   title: charity.name!,
-                                  image: "",
+                                  image: charity.image!,
                                   id: charity.cid!,
                                   description: charity.description!,
                                   amount: charity.amount!,

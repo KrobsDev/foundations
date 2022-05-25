@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     var response = await http.post(
-      Uri.parse("${Env.URL_PREFIX_USERS}/login"),
+      Uri.parse("${Env.URL_PREFIX_USERS}/login.php"),
       body: data,
       headers: {
         "Accept": "application/json",

@@ -17,16 +17,6 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-  // String? email = '';
-
-  // void _checkLoggedIn() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   var obtainedEmail = prefs.getString('email');
-  //   setState(() {
-  //     email = obtainedEmail;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -44,6 +34,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ),
         ),
       ),
+      centerTitle: true,
       title: const Image(image: AssetImage('assets/logo/logo-dark-sm.png')),
       actions: [
         Padding(

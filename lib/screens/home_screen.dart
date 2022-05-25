@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
 
   // get all posts
   Future<List<Post>> _getAllPosts() async {
-    var url = Uri.parse("${Env.URL_PREFIX_POSTS}/read_all");
+    var url = Uri.parse("${Env.URL_PREFIX_POSTS}/read_all.php");
     var response = await http.get(
       url,
       headers: {
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
       "image": "",
     });
 
-    var url = Uri.parse("${Env.URL_PREFIX_POSTS}/create_post");
+    var url = Uri.parse("${Env.URL_PREFIX_POSTS}/create_post.php");
     var response = await http.post(
       url,
       body: data,
@@ -139,6 +139,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Column(
                                   children: [
                                     PostItem(
+                                      photo: post.image,
                                       content: post.content,
                                     ),
                                     const Divider(),
@@ -191,10 +192,10 @@ class _HomePageState extends State<HomePage> {
                               setState(() {
                                 isLoading = true;
                               });
-                              await Future.delayed(
-                                Duration(seconds: 3),
-                              );
+
                               await _createPost();
+
+                              _postcontroller.clear();
 
                               _refreshList();
 

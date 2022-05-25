@@ -63,7 +63,7 @@ class _ContactInformationState extends State<ContactInformation> {
       "user_id": uid,
       "user_phone": _phonecontroller.text,
     });
-    var url = Uri.parse("${Env.URL_PREFIX_USERS}/update_contact_info");
+    var url = Uri.parse("${Env.URL_PREFIX_USERS}/update_contact_info.php");
     var response = await http.post(
       url,
       body: data,

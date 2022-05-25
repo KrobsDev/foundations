@@ -80,7 +80,7 @@ class _MyProfileState extends State<MyProfile> {
       "user_fname": _fnamecontroller.text,
       "user_lname": _lnamecontroller.text,
     });
-    var url = Uri.parse("${Env.URL_PREFIX_USERS}/update_user");
+    var url = Uri.parse("${Env.URL_PREFIX_USERS}/update_user.php");
     var response = await http.post(
       url,
       body: data,

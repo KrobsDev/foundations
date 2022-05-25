@@ -1,8 +1,16 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:foundations/constants.dart';
 import 'package:foundations/widgets/custom_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_paystack/flutter_paystack.dart';
+import '../../env.dart';
+import '../../models/user_model.dart';
+import '../../widgets/paybutton.dart';
 
-class CharityDetail extends StatelessWidget {
+class CharityDetail extends StatefulWidget {
   final String id;
   final String title;
   final String image;
@@ -19,6 +27,137 @@ class CharityDetail extends StatelessWidget {
     required this.amount,
     required this.target,
   }) : super(key: key);
+
+  @override
+  State<CharityDetail> createState() => _CharityDetailState();
+}
+
+class _CharityDetailState extends State<CharityDetail> {
+  final TextEditingController _amountcontroller = TextEditingController();
+
+  String? uid;
+
+  bool isLoading = false;
+
+  // function check if user is logged in
+  Future _isLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      uid = prefs.getString("uid");
+    });
+
+    // print(uid);
+  }
+
+  // User object to use throughout page
+  User? user;
+
+  // get user details
+  Future _getUserDetails() async {
+    var url = Uri.parse("${Env.URL_PREFIX_USERS}/read_single.php?id=$uid");
+    var response = await http.get(
+      url,
+      headers: {"Accept": "application/json"},
+    );
+
+    var res = jsonDecode(response.body);
+
+    // get user in user object
+    Map<String, dynamic> userMap = res;
+    User userObj = User.fromJson(userMap);
+
+    // print(user.email);
+    setState(() {
+      user = userObj;
+    });
+
+    // print(user!.email);
+  }
+
+  // add donation
+  Future _makeDonation() async {
+    var data = jsonEncode({
+      "uid": uid,
+      "cid": widget.id,
+      "amount": _amountcontroller.text,
+    });
+    var url = Uri.parse("${Env.URL_PREFIX_CHAR}/read_all.php");
+    var response = await http.post(
+      url,
+      body: data,
+      headers: {
+        'Content-Type': 'application/json',
+        "Accept": "application/json",
+      },
+    );
+    var res = jsonDecode(response.body);
+  }
+
+  String publicKeyTest = 'pk_test_1b76c2f2510013d9f5d7448d8b980d760e346b27';
+  //pass in the public test key obtained from paystack dashboard here
+
+  final plugin = PaystackPlugin();
+
+  //a method to show the message
+  void _showMessage(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  //used to generate a unique reference for payment
+  String _getReference() {
+    var platform = (Platform.isIOS) ? 'iOS' : 'Android';
+    final thisDate = DateTime.now().millisecondsSinceEpoch;
+    return 'ChargedFrom${platform}_$thisDate';
+  }
+
+  //async method to charge users card and return a response
+  chargeCard() async {
+    var charge = Charge()
+      ..amount = 100 * 100
+
+      //the money should be in kobo hence the need to multiply the value by 100
+      ..reference = _getReference()
+      ..putCustomField('custom_id',
+          '846gey6w') //to pass extra parameters to be retrieved on the response from Paystack
+      ..email = user == null ? '' : user!.email
+      ..currency = 'GHS';
+
+    CheckoutResponse response = await plugin.checkout(
+      context,
+      method: CheckoutMethod.card,
+      charge: charge,
+    );
+
+    //check if the response is true or not
+    if (response.status == true) {
+      //you can send some data from the response to an API or use webhook to record the payment on a database
+      var url = Uri.parse(
+          'https://api.paystack.co/transaction/verify/${response.reference}');
+      var pResponse = await http.get(url, headers: {
+        "Authorization":
+            "Bearer sk_test_cc71bd31eecb6824fe24cc448e9bf2aa3982f110"
+      });
+      var res = jsonDecode(pResponse.body);
+      // add orders to database
+
+      _showMessage('Payment was successful!!!');
+    } else {
+      //the payment wasn't successsful or the user cancelled the payment
+      // print(response.reference);
+      _showMessage('Payment Failed!!!');
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    plugin.initialize(publicKey: publicKeyTest);
+    _isLoggedIn().whenComplete(() {
+      _getUserDetails();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +190,10 @@ class CharityDetail extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Hero(
-                      tag: title,
-                      child: image.isNotEmpty
+                      tag: widget.title,
+                      child: widget.image.isNotEmpty
                           ? Image.network(
-                              image,
+                              widget.image,
                               fit: BoxFit.cover,
                             )
                           : Image.asset("assets/images/no-image-icon-20.png"),
@@ -64,7 +203,7 @@ class CharityDetail extends StatelessWidget {
                 const SizedBox(height: 20),
                 const SizedBox(height: 5),
                 Text(
-                  title,
+                  widget.title,
                   style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
@@ -72,7 +211,8 @@ class CharityDetail extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 LinearProgressIndicator(
-                  value: double.parse(amount.replaceAll(',', '')) / 100000,
+                  value:
+                      double.parse(widget.amount.replaceAll(',', '')) / 100000,
                   color: kDefaultBackground,
                   backgroundColor: inactiveColor.withOpacity(0.09),
                 ),
@@ -87,7 +227,7 @@ class CharityDetail extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'GHS $amount',
+                      'GHS ${widget.amount}',
                       style: const TextStyle(
                         fontSize: kDefaultHeading,
                         fontWeight: FontWeight.bold,
@@ -113,7 +253,7 @@ class CharityDetail extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 25),
                   child: Text(
-                    description,
+                    widget.description,
                     style: const TextStyle(
                       fontSize: 16,
                       height: 1.5,
@@ -211,8 +351,12 @@ class CharityDetail extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 20),
                                 const Spacer(),
-                                CustomButton(
-                                    onPressed: () {}, btnName: 'Donate')
+                                PayButton(
+                                  //call the chargeCard method
+                                  callback: () => chargeCard(),
+                                ),
+                                // CustomButton(
+                                //     onPressed: () {}, btnName: 'Donate')
                               ],
                             ),
                           );

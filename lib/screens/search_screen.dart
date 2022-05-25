@@ -44,7 +44,7 @@ class _SearchPageState extends State<SearchPage> {
 
   // get all posts
   Future<List<CharityModel>> _getAllCharities() async {
-    var url = Uri.parse("${Env.URL_PREFIX_CHAR}/read_all");
+    var url = Uri.parse("${Env.URL_PREFIX_CHAR}/read_all.php");
     var response = await http.get(
       url,
       headers: {
@@ -164,7 +164,7 @@ class _SearchPageState extends State<SearchPage> {
                                   children: [
                                     CharityItem(
                                       title: charity.name!,
-                                      image: "",
+                                      image: charity.image!,
                                       id: charity.cid!,
                                       description: charity.description!,
                                       amount: charity.amount!,
