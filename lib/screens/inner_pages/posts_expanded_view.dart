@@ -25,9 +25,14 @@ class ExpandedPostPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: kDefaultBackground),
+        title: const Text(
+          'Post',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: SingleChildScrollView(
           child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ExpandedPostItem(
             profileImage: profileImage,

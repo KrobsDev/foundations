@@ -6,6 +6,8 @@ import '../constants.dart';
 
 class PostItem extends StatelessWidget {
   final String? photo;
+  final String? name;
+  final String? email;
   final String? profileImage;
   final String? content;
   final VoidCallback? onTap;
@@ -17,11 +19,14 @@ class PostItem extends StatelessWidget {
     this.onTap,
     this.content = "",
     this.hideDets = false,
+    this.name = '',
+    this.email = '',
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ListTile(
           onTap: () {
@@ -48,18 +53,18 @@ class PostItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
-                children: const [
+                children: [
                   Text(
-                    'Akwasi Asante',
-                    style: TextStyle(
+                    name!,
+                    style: const TextStyle(
                       fontSize: kDefaultFontSize,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   SizedBox(width: 5),
                   Text(
-                    '@ak@gmail.com',
-                    style: TextStyle(
+                    email!,
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
                     ),

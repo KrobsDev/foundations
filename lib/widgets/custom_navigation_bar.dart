@@ -17,6 +17,7 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
   // This widget is the root of your application.
   int _currentIndex = 0;
 
+  // list of screens that will be rendered in the scaffold body
   final screens = [
     const HomePage(),
     const CharitiesPage(),
@@ -48,10 +49,6 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
             icon: Icon(Icons.search),
             label: 'Explore',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.person),
-          //   label: 'Profile',
-          // ),
         ],
       ),
       tabBuilder: (BuildContext context, int index) {

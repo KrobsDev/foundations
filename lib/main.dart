@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foundations/screens/inner_pages/notifications_screen.dart';
 import 'package:foundations/screens/login.dart';
 import 'package:foundations/screens/onboarding_screen.dart';
@@ -12,14 +13,20 @@ import 'package:foundations/widgets/custom_navigation_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int? initScreen;
-String? uid;
+int? uid;
+String? email;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);
-  uid = prefs.getString("uid");
-  runApp(const MyApp());
+  uid = prefs.getInt("uid");
+  email = prefs.getString("email");
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -36,13 +43,13 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: initScreen == 0 || initScreen == null
           ? '/onboard'
-          : uid == null
+          : uid == null && email == null
               ? '/login'
               : '/home',
       routes: {
         '/home': (context) => const CustomBottomNavigation(),
         '/onboard': (context) => const Onboarding(),
-        '/login': (context) => const LoginScreen(),
+        '/login': (context) => LoginScreen(),
         '/signup': (context) => const RegisterScreen(),
         '/profile': (context) => const ProfilePage(),
         '/notifications': (context) => const NotificationsPage(),

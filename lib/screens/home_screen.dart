@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
 
   // get all posts
   Future<List<Post>> _getAllPosts() async {
-    var url = Uri.parse("${Env.URL_PREFIX_POSTS}/read_all.php");
+    var url = Uri.parse("${Env.URL_ENDPOINT_POSTS}/read_all.php");
     var response = await http.get(
       url,
       headers: {
@@ -47,17 +47,16 @@ class _HomePageState extends State<HomePage> {
         "Accept": "application/json",
       },
     );
-    var res = jsonDecode(response.body)["data"] as List;
-    // var tagObjsJson = jsonDecode(arrayObjsText)['tags'] as List;
+    var res = jsonDecode(response.body)['data'] as List;
+    // print(res);
     List<Post> posts = res.map((data) => Post.fromJson(data)).toList();
 
-    // print(posts.length);
     return posts;
   }
 
   void _refreshList() async {
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       _getAllPosts();
     });
@@ -71,9 +70,10 @@ class _HomePageState extends State<HomePage> {
       "user_id": uid,
       "content": _postcontroller.text,
       "image": "",
+      "dateTime": DateTime.now().toLocal().toString()
     });
 
-    var url = Uri.parse("${Env.URL_PREFIX_POSTS}/create_post.php");
+    var url = Uri.parse("${Env.URL_ENDPOINT_POSTS}/create_post.php");
     var response = await http.post(
       url,
       body: data,
@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
       },
     );
     var res = jsonDecode(response.body);
+    // print(res);
   }
 
   bool isLoading = false;
@@ -91,6 +92,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // List<Post> posts = [];
     _getAllPosts();
   }
 
@@ -139,6 +141,8 @@ class _HomePageState extends State<HomePage> {
                                 child: Column(
                                   children: [
                                     PostItem(
+                                      name: '${post.fname} ${post.lname}',
+                                      email: post.email,
                                       photo: post.image,
                                       content: post.content,
                                     ),

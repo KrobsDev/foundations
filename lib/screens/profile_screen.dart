@@ -15,7 +15,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String? uid;
+  int? uid;
 
   bool isLoading = false;
 
@@ -23,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future _isLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      uid = prefs.getString("uid");
+      uid = prefs.getInt("uid");
     });
 
     // print(uid);
@@ -34,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // get user details
   Future _getUserDetails() async {
-    var url = Uri.parse("${Env.URL_PREFIX_USERS}/read_single.php?id=$uid");
+    var url = Uri.parse("${Env.URL_ENDPOINT_USERS}/read_single.php?id=$uid");
     var response = await http.get(
       url,
       headers: {"Accept": "application/json"},
@@ -123,9 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   padding: const EdgeInsets.only(top: 100.0, bottom: 2),
                   child: Center(
                     child: Text(
-                      user == null
-                          ? '...loading'
-                          : user!.fname! + ' ' + user!.lname!,
+                      user == null ? '...loading' : '',
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -134,7 +132,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Text(
-                  user == null ? '...loading' : user!.email!,
+                  user == null ? '...loading' : 'user!.email!',
                   style: TextStyle(color: inactiveColor),
                 ),
                 const SizedBox(height: 20),

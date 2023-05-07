@@ -17,13 +17,12 @@ class CharitiesPage extends StatefulWidget {
 }
 
 class _CharitiesPageState extends State<CharitiesPage> {
-
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   // get all posts
   Future<List<CharityModel>> _getAllCharities() async {
-    var url = Uri.parse("${Env.URL_PREFIX_CHAR}/read_all.php");
+    var url = Uri.parse("${Env.URL_ENDPOINT_CHAR}/read_all.php");
     var response = await http.get(
       url,
       headers: {

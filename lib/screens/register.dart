@@ -29,7 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   // Create user
   Future _createUser() async {
     return await http.post(
-      Uri.parse("${Env.URL_PREFIX_USERS}/create.php"),
+      Uri.parse("${Env.URL_ENDPOINT_USERS}/create.php"),
       body: jsonEncode(
         {
           "user_fname": _fnamecontroller.text,

@@ -18,7 +18,7 @@ class ContactInformation extends StatefulWidget {
 class _ContactInformationState extends State<ContactInformation> {
   final TextEditingController _phonecontroller = TextEditingController();
 
-  String? uid;
+  int? uid;
 
   bool isLoading = false;
 
@@ -26,7 +26,7 @@ class _ContactInformationState extends State<ContactInformation> {
   Future _isLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      uid = prefs.getString("uid");
+      uid = prefs.getInt("uid");
     });
 
     // print(uid);
@@ -37,7 +37,7 @@ class _ContactInformationState extends State<ContactInformation> {
 
   // get user details
   Future _getUserDetails() async {
-    var url = Uri.parse("${Env.URL_PREFIX_USERS}/read_single.php?id=$uid");
+    var url = Uri.parse("${Env.URL_ENDPOINT_USERS}/read_single.php?id=$uid");
     var response = await http.get(
       url,
       headers: {"Accept": "application/json"},
@@ -63,7 +63,7 @@ class _ContactInformationState extends State<ContactInformation> {
       "user_id": uid,
       "user_phone": _phonecontroller.text,
     });
-    var url = Uri.parse("${Env.URL_PREFIX_USERS}/update_contact_info.php");
+    var url = Uri.parse("${Env.URL_ENDPOINT_USERS}/update_contact_info.php");
     var response = await http.post(
       url,
       body: data,

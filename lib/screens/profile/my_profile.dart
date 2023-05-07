@@ -34,7 +34,7 @@ class _MyProfileState extends State<MyProfile> {
     }
   }
 
-  String? uid;
+  int? uid;
 
   bool isLoading = false;
 
@@ -42,7 +42,7 @@ class _MyProfileState extends State<MyProfile> {
   Future _isLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      uid = prefs.getString("uid");
+      uid = prefs.getInt("uid");
     });
 
     // print(uid);
@@ -53,7 +53,7 @@ class _MyProfileState extends State<MyProfile> {
 
   // get user details
   Future _getUserDetails() async {
-    var url = Uri.parse("${Env.URL_PREFIX_USERS}/read_single.php?id=$uid");
+    var url = Uri.parse("${Env.URL_ENDPOINT_USERS}/read_single.php?id=$uid");
     var response = await http.get(
       url,
       headers: {"Accept": "application/json"},
@@ -80,7 +80,7 @@ class _MyProfileState extends State<MyProfile> {
       "user_fname": _fnamecontroller.text,
       "user_lname": _lnamecontroller.text,
     });
-    var url = Uri.parse("${Env.URL_PREFIX_USERS}/update_user.php");
+    var url = Uri.parse("${Env.URL_ENDPOINT_USERS}/update_user.php");
     var response = await http.post(
       url,
       body: data,

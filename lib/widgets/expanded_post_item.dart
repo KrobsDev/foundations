@@ -26,6 +26,7 @@ class ExpandedPostItem extends StatelessWidget {
           padding:
               const EdgeInsets.only(top: 20.0, bottom: 10, left: 20, right: 20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -19,7 +19,7 @@ class _AccountSettingsState extends State<AccountSettings> {
   final TextEditingController _oldpwcontroller = TextEditingController();
   final TextEditingController _newpwcontroller = TextEditingController();
 
-  String? uid;
+  int? uid;
 
   bool isLoading = false;
 
@@ -27,7 +27,7 @@ class _AccountSettingsState extends State<AccountSettings> {
   Future _isLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      uid = prefs.getString("uid");
+      uid = prefs.getInt("uid");
     });
 
     // print(uid);
@@ -38,7 +38,7 @@ class _AccountSettingsState extends State<AccountSettings> {
 
   // get user details
   Future _getUserDetails() async {
-    var url = Uri.parse("${Env.URL_PREFIX_USERS}/read_single.php?id=$uid");
+    var url = Uri.parse("${Env.URL_ENDPOINT_USERS}/read_single.php?id=$uid");
     var response = await http.get(
       url,
       headers: {"Accept": "application/json"},

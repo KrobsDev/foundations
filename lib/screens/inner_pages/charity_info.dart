@@ -35,7 +35,7 @@ class CharityDetail extends StatefulWidget {
 class _CharityDetailState extends State<CharityDetail> {
   final TextEditingController _amountcontroller = TextEditingController();
 
-  String? uid;
+  int? uid;
 
   bool isLoading = false;
 
@@ -43,7 +43,7 @@ class _CharityDetailState extends State<CharityDetail> {
   Future _isLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      uid = prefs.getString("uid");
+      uid = prefs.getInt("uid");
     });
 
     // print(uid);
@@ -54,7 +54,7 @@ class _CharityDetailState extends State<CharityDetail> {
 
   // get user details
   Future _getUserDetails() async {
-    var url = Uri.parse("${Env.URL_PREFIX_USERS}/read_single.php?id=$uid");
+    var url = Uri.parse("${Env.URL_ENDPOINT_USERS}/read_single.php?id=$uid");
     var response = await http.get(
       url,
       headers: {"Accept": "application/json"},
@@ -81,7 +81,7 @@ class _CharityDetailState extends State<CharityDetail> {
       "cid": widget.id,
       "amount": _amountcontroller.text,
     });
-    var url = Uri.parse("${Env.URL_PREFIX_CHAR}/read_all.php");
+    var url = Uri.parse("${Env.URL_ENDPOINT_CHAR}/read_all.php");
     var response = await http.post(
       url,
       body: data,
